@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+spring:
+  application:
+    name: logistics-server
+  jackson:
+    default-property-inclusion: non_null
+
+logging:
+  level:
+    com.logistics: INFO

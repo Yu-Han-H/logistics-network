@@ -1,0 +1,37 @@
+# ---- Java / Maven ----
+target/
+bin/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# ---- Node / Vite ----
+node_modules/
+dist/
+.vite/
+
+# ---- IDE ----
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# ---- Obsidian 本地配置 ----
+.obsidian/
+
+# ---- OS / logs ----
+.DS_Store
+Thumbs.db
+*.log
+
+# ---- 归档的旧脚手架，不提交 ----
+_archive/
+
+# ---- 本地 Maven 缓存（设置了 MAVEN_USER_HOME 时） ----
+.mvn-home/
+.m2/
+
+# ---- 本地环境 ----
+.env.local
+.env.*.local
