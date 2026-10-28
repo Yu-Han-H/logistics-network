@@ -1,0 +1,14 @@
+{
+  "folders": [
+    { "name": "后端 logistics-server", "path": "logistics-server" },
+    { "name": "前端 logistics-web", "path": "logistics-web" },
+    { "name": "文档 docs", "path": "docs" }
+  ],
+  "settings": {
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.import.maven.enabled": true,
+    "files.encoding": "utf8",
+    "files.eol": "\n",
+    "editor.formatOnSave": false
+  }
+}

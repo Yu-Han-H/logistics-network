@@ -41,11 +41,14 @@ npm run dev
 
 端口 5173，`/api` 会代理到 `http://localhost:8080`。
 
+> VS Code 报“包名不匹配”或“Spring 包找不到”，先看 [环境与 IDE](docs/环境与IDE.md)。
+
 ## 文档
 
 - [开发文档 v1.1](docs/开发文档-v1.1.md)：需求、排期、核心设计、接口、测试。
 - [项目结构说明](docs/项目结构说明.md)：每个目录放什么、依赖方向、数据流。
 - [API 契约](docs/api.md)：接口清单和示例。
+- [环境与 IDE](docs/环境与IDE.md)：VS Code 报错、Maven 依赖安装。
 - [开发文档 v1.0](docs/开发文档.md)：旧版，保留对比。
 
 ## 当前状态
@@ -54,6 +57,7 @@ npm run dev
 - 前端骨架已搭好：Vite、路由、登录页、5 个业务页占位、axios 封装。
 - `demo/` 已移到 `_archive/spring-initializr-demo/`，旧 VS Code Java 模板已移到 `_archive/logistics-server-vscode-template/`。
 - 已初始化 Git 仓库（`main` 分支），初始提交 `c452c15`。
+- 已提供 `logistics-network.code-workspace`，用 VS Code 打开它，后端才会被识别为 Maven 工程。
 
 ## 版本说明
 
