@@ -9,6 +9,7 @@
     "java.import.maven.enabled": true,
     "files.encoding": "utf8",
     "files.eol": "\n",
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "java.compile.nullAnalysis.mode": "automatic"
   }
 }
