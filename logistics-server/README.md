@@ -8,7 +8,7 @@
 - Maven 用项目自带的 `mvnw`，不需要全局安装 Maven
 - 端口：8080
 
-> 文档 v1.1 里写的是 JDK 21 + Spring Boot 3.2.x，本机实际是 JDK 25 + Spring Boot 4.1.2，骨架按本机版本生成。如果课程或实验室要求 JDK 21，改 `pom.xml` 的 `<java.version>` 和 `<parent>` 版本即可，Java 代码不用动。
+> 文档 v1.1 和本项目骨架统一用 JDK 25 + Spring Boot 4.1.2。如果课程或实验室要求 JDK 21，改 `pom.xml` 的 `<java.version>` 和 `<parent>` 版本即可，Java 代码不用动。
 
 ## 启动
 

@@ -53,11 +53,11 @@ npm run dev
 - 后端骨架已搭好：Maven Wrapper、启动类、包结构、`application.yml`。
 - 前端骨架已搭好：Vite、路由、登录页、5 个业务页占位、axios 封装。
 - `demo/` 已移到 `_archive/spring-initializr-demo/`，旧 VS Code Java 模板已移到 `_archive/logistics-server-vscode-template/`。
-- 还没有 Git 仓库。建议在根目录执行 `git init`，首次提交前确认 `.gitignore` 生效。
+- 已初始化 Git 仓库（`main` 分支），初始提交 `c452c15`。
 
 ## 版本说明
 
-文档 v1.1 写的是 JDK 21 + Spring Boot 3.2.x；本机实际是 JDK 25 + Spring Boot 4.1.2，骨架按本机版本生成。如果课程要求 JDK 21，改 `logistics-server/pom.xml` 的 `<java.version>` 和 `<parent>` 版本，代码不用改。
+文档 v1.1 已按本机环境改为 JDK 25 + Spring Boot 4.1.x。如果课程要求 JDK 21，改 `logistics-server/pom.xml` 的 `<java.version>` 和 `<parent>` 版本，代码不用改。
 
 ## 下一步
 
