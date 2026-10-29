@@ -41,4 +41,29 @@ public class City {
     public double getLatitude() {
         return latitude;
     }
+
+    //重写equals--通过id判断是否是相同的城市
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof City other)) {
+            return false;
+        }
+        return id == other.id;
+    }
+
+    //重写hashCode--为了满足equals必须要重写hashCode
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
+    }
+
+    //重写toString--让日志和报错更易理解
+    @Override
+    public String toString() {
+        return "City{id=" + id + ", name='" + name
+            + "', longitude=" + longitude + ", latitude=" + latitude + "}";
+    }
 }
