@@ -29,14 +29,17 @@ public class Edge {
     }
 
     public int getStartId() {
+
         return startId;
     }
 
     public int getEndId() {
+
         return endId;
     }
 
     public double getWeight() {
+
         return weight;
     }
 
