@@ -42,6 +42,31 @@ public class City {
         return latitude;
     }
 
+    /**
+     * 修改城市名称。id 是主键，不提供 setter，避免改 id 破坏链表、图和缓存。
+     *
+     * <p>名称唯一性、长度等业务校验放在 Service / DTO，模型只负责存值。
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * 修改经度。修改后要调 {@code DoublyCircularLinkedList.sortByDistance}
+     * 重排链表，并重建相关边权（文档 4.7）。
+     */
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    /**
+     * 修改纬度。修改后要调 {@code DoublyCircularLinkedList.sortByDistance}
+     * 重排链表，并重建相关边权（文档 4.7）。
+     */
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
     //重写equals--通过id判断是否是相同的城市
     @Override
     public boolean equals(Object o) {

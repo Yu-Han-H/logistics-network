@@ -1,13 +1,15 @@
 package com.logistics.structure;
 
+import com.logistics.algorithm.mst.KruskalMST;
+import com.logistics.algorithm.mst.MstResult;
+import com.logistics.algorithm.mst.PrimMST;
 import com.logistics.model.City;
 import com.logistics.model.Edge;
-import com.logistics.structure.WeightedGraph;
 
 import java.util.List;
 
 /**
- * 邻接表图的自检程序（不依赖 JUnit）。
+ * 邻接表图与 MST 的自检程序（不依赖 JUnit）。
  *
  * <p>用法：右键 Run 'GraphCheck.main()'。
  * 全部通过时最后一行是「通过 N 项，失败 0 项」，退出码 0；
@@ -19,7 +21,7 @@ public class GraphCheck {
     private static int failed;
 
     public static void main(String[] args) {
-        System.out.println("=== 邻接表图自检 ===");
+        System.out.println("=== 邻接表图 / MST 自检 ===");
 
         WeightedGraph graph = WeightedGraph.completeGraph(eightCities());
 
@@ -41,7 +43,26 @@ public class GraphCheck {
             graph.edges().stream().allMatch(edge -> edge.getStartId() < edge.getEndId()));
         check("初始不变量校验通过", invariantsOk(graph));
 
-        // ---------- 4. 删除城市 ----------
+        // ---------- 4. MST ----------
+        PrimMST prim = new PrimMST();
+        KruskalMST kruskal = new KruskalMST();
+        MstResult primResult = prim.primMST(graph);
+        MstResult kruskalResult = kruskal.kruskalMST(graph);
+
+        check("Prim 连通", primResult.isConnected());
+        check("Prim 边数 = 7", primResult.getEdgeCount() == 7);
+        check("Prim 总权值 = 4360.77", closeTo(primResult.getTotalWeight(), 4360.77));
+        check("Kruskal 连通", kruskalResult.isConnected());
+        check("Kruskal 边数 = 7", kruskalResult.getEdgeCount() == 7);
+        check("Kruskal 总权值 = 4360.77", closeTo(kruskalResult.getTotalWeight(), 4360.77));
+        check("Prim 与 Kruskal 总权值相等",
+            closeTo(primResult.getTotalWeight(), kruskalResult.getTotalWeight()));
+        check("Prim 总权值 = 各边权值之和",
+            closeTo(primResult.getTotalWeight(), sumWeights(primResult)));
+        check("MST 边全部满足 fromId < toId",
+            primResult.getEdges().stream().allMatch(edge -> edge.getStartId() < edge.getEndId()));
+
+        // ---------- 5. 删除城市 ----------
         WeightedGraph afterRemove = WeightedGraph.completeGraph(eightCities());
         boolean removed = afterRemove.removeVertex(1000);
         check("removeVertex(1000) 返回 true", removed);
@@ -50,14 +71,14 @@ public class GraphCheck {
         check("北京没有残留邻居", afterRemove.neighbors(1000).isEmpty());
         check("删除后不变量校验通过", invariantsOk(afterRemove));
 
-        // ---------- 5. 更新边权 ----------
+        // ---------- 6. 更新边权 ----------
         WeightedGraph afterUpdate = WeightedGraph.completeGraph(eightCities());
         afterUpdate.updateWeight(1000, 1001, 1000.00);
         check("更新权值后边数仍为 28", afterUpdate.edgeCount() == 28);
         check("更新后北京—上海 = 1000.00", closeTo(weightOf(afterUpdate, 1000, 1001), 1000.00));
         check("更新后不变量校验通过", invariantsOk(afterUpdate));
 
-        // ---------- 6. 重复加边 ----------
+        // ---------- 7. 重复加边 ----------
         boolean threw = false;
         try {
             afterUpdate.addEdge(1000, 1001, 1.00);
@@ -103,16 +124,14 @@ public class GraphCheck {
     }
 
     private static int records(WeightedGraph graph) {
-        return graph.vertices().stream().mapToInt(graph::degree).sum();
+        return graph.adjacencyRecordCount();
     }
 
     private static boolean allSymmetric(WeightedGraph graph) {
         for (Edge edge : graph.edges()) {
-            if (!graph.hasEdge(edge.getStartId(), edge.getEndId())) {
-                return false;
-            }
-            if (!closeTo(weightOf(graph, edge.getStartId(), edge.getEndId()),
-                weightOf(graph, edge.getStartId(), edge.getEndId()))) {
+            double forward = weightOf(graph, edge.getStartId(), edge.getEndId());
+            double backward = weightOf(graph, edge.getEndId(), edge.getStartId());
+            if (!closeTo(forward, backward)) {
                 return false;
             }
         }
@@ -123,8 +142,16 @@ public class GraphCheck {
         return graph.neighbors(from).stream()
             .filter(edge -> edge.connects(from, to))
             .findFirst()
-            .orElseThrow()
-            .getWeight();
+            .map(Edge::getWeight)
+            .orElse(Double.NaN);
+    }
+
+    private static double sumWeights(MstResult result) {
+        double sum = 0.0;
+        for (Edge edge : result.getEdges()) {
+            sum += edge.getWeight();
+        }
+        return Math.round(sum * 100) / 100.0;
     }
 
     private static List<City> eightCities() {
