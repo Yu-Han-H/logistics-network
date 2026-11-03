@@ -41,7 +41,7 @@ src/main/java/com/logistics/
 ├── dto/                        # 对外返回对象
 ├── structure/                  # 手写数据结构：CityNode、链表、图
 ├── algorithm/
-│   ├── mst/                    # Prim、Kruskal、UnionFind
+│   ├── mst/                    # Prim、Kruskal、UnionFind、MstResult
 │   └── path/                   # Dijkstra
 ├── common/                     # Result、状态码、全局异常
 ├── config/                     # 编码、拦截器注册
