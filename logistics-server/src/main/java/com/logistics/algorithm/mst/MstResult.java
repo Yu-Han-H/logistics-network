@@ -36,9 +36,9 @@ public class MstResult {
      * 再按 toId 升序。对应文档 4.2 第 6 条 tie-break 规则。
      */
     private static final Comparator<Edge> EDGE_ORDER = Comparator
-        .comparingDouble(Edge::getWeight)
-        .thenComparingInt(Edge::getStartId)
-        .thenComparingInt(Edge::getEndId);
+        .comparingDouble((Edge edge) -> edge.getWeight())
+        .thenComparingInt(edge -> edge.getStartId())
+        .thenComparingInt(edge -> edge.getEndId());
 
     private final String algorithm;
     private final int nodeCount;
