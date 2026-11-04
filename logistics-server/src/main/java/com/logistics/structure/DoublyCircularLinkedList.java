@@ -30,6 +30,7 @@ public class DoublyCircularLinkedList {
     private final CityNode head;
     private int size;
 
+    //创建一个空表
     public DoublyCircularLinkedList() {
         this.head = new CityNode(null);
         this.size = 0;
@@ -37,13 +38,16 @@ public class DoublyCircularLinkedList {
         this.head.next = head;
     }
 
+    //列表大小
     public int size(){
         return size;
     }
 
+    //判断列表是否为空
     public boolean isEmpty(){
         return size==0;
     }
+
 
     public CityNode first() {
         return isEmpty()?null:head.next;
@@ -89,7 +93,7 @@ public class DoublyCircularLinkedList {
      */
     public CityNode addByDistance(City city, int referenceId) {
         if (city == null) {
-            throw new IllegalArgumentException("城市不能为 null");
+            throw new IllegalArgumentException("城市不能为 null");//throw new IllegalArgumentException表示运行时city为空，异常并停止
         }
         requireNoDuplicate(city.getId());
 
@@ -115,6 +119,7 @@ public class DoublyCircularLinkedList {
         return node;
     }
 
+    //通过id查找cityid
     public City find(int cityId) {
         CityNode node = findNode(cityId);
         return node == null ? null : node.city;
@@ -247,6 +252,7 @@ public class DoublyCircularLinkedList {
         }
     }
 
+    //通过cityid查找城市
     private CityNode findNode(int cityId) {
         for (CityNode node = head.next; node != head; node = node.next) {
             if (node.city.getId() == cityId) {
@@ -256,6 +262,7 @@ public class DoublyCircularLinkedList {
         return null;
     }
 
+    //判断city是否为空
     /** 插入前的统一校验：非 null，且 id 不重复（文档 4.3 不变量 4）。 */
     private void requireAddable(City city) {
         if (city == null) {
@@ -264,6 +271,7 @@ public class DoublyCircularLinkedList {
         requireNoDuplicate(city.getId());
     }
 
+    //查询是否有相同的cityid
     private void requireNoDuplicate(int cityId) {
         if (findNode(cityId) != null) {
             throw new IllegalArgumentException("城市 id 已存在：" + cityId);
