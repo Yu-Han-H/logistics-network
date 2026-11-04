@@ -60,7 +60,7 @@ class DoublyCircularLinkedListTest {
 
         list.checkInvariants();
         assertThat(list.toList())
-            .extracting(City::getName)
+            .extracting(city -> city.getName())
             .containsExactly("北京", "沈阳", "上海", "广州");
     }
 
@@ -77,7 +77,7 @@ class DoublyCircularLinkedListTest {
 
         List<City> sorted = list.toList();
         assertThat(sorted)
-            .extracting(City::getName)
+            .extracting(city -> city.getName())
             .containsExactly("北京", "沈阳", "上海", "广州");
 
         // 距离必须非递减
@@ -101,7 +101,7 @@ class DoublyCircularLinkedListTest {
         list.checkInvariants();
 
         assertThat(list.toList())
-            .extracting(City::getId)
+            .extracting(city -> city.getId())
             .containsExactly(1000, 1008, 1009);
     }
 

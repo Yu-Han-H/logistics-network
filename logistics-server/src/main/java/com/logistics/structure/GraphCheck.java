@@ -139,11 +139,12 @@ public class GraphCheck {
     }
 
     private static double weightOf(WeightedGraph graph, int from, int to) {
-        return graph.neighbors(from).stream()
-            .filter(edge -> edge.connects(from, to))
-            .findFirst()
-            .map(Edge::getWeight)
-            .orElse(Double.NaN);
+        for (Edge edge : graph.neighbors(from)) {
+            if (edge.connects(from, to)) {
+                return edge.getWeight();
+            }
+        }
+        return Double.NaN;
     }
 
     private static double sumWeights(MstResult result) {
