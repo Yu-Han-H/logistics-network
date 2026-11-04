@@ -13,6 +13,17 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+/*
+    Map不是 "一个类"，它是一个接口（interface），定义了一套键值对存储的 "标准"，HashMap 是它的一个实现类。
+    Map<Key值，Value值>
+ */
+
+/*
+Collection（存单个元素）          Map（存键值对）
+   ├── List：有顺序、可重复          ├── HashMap
+   ├── Set：无顺序、不可重复         ├── TreeMap
+   └── Queue：队列                  └── ...
+ */
 /**
  * 带权无向图，邻接表实现。
  *
@@ -36,8 +47,9 @@ public class WeightedGraph {
     // 顶点
     // ------------------------------------------------------------------
 
+    //通过cityId来判断该城市是否在图中出现过
     public boolean addVertex(int cityId) {
-        if (adjacency.containsKey(cityId)) {
+        if (adjacency.containsKey(cityId)) {    //map.containsKey() --判断是否存在，有为true，无为false；
             return false;
         }
         adjacency.put(cityId, new ArrayList<>());
@@ -48,6 +60,7 @@ public class WeightedGraph {
         return adjacency.containsKey(cityId);
     }
 
+    //vertexCount作用是返回图的大小
     public int vertexCount() {
         return adjacency.size();
     }
@@ -55,7 +68,7 @@ public class WeightedGraph {
     /** 按 id 升序，保证邻接表输出顺序稳定。 */
     public Set<Integer> vertices() {
         return Collections.unmodifiableSet(new TreeSet<>(adjacency.keySet()));
-    }
+    }//把传进去的 Set 包一层“只读外壳”，返回后调用方只能读、不能改。
 
     /**
      * 顶点 id 的升序快照，返回基本类型数组。
@@ -64,6 +77,7 @@ public class WeightedGraph {
      * 直接遍历 {@code Set<Integer>} 会反复拆箱，这里一次性转成 {@code int[]}，
      * 算法内部就不再出现 Integer 拆箱。
      */
+    //把Integer的key值转化为int型ids[]的值
     public int[] vertexIds() {
         TreeSet<Integer> sorted = new TreeSet<>(adjacency.keySet());
         int[] ids = new int[sorted.size()];
@@ -115,6 +129,16 @@ public class WeightedGraph {
      * 单独提供这个方法，避免调用方为了统计记录数去拆箱 Stream&lt;Integer&gt;，
      * 也能在自检时直接验证「每条边存两次」。
      */
+
+    /*
+        adjacencyRecordCount作用：统计邻接表里一共有多少条记录
+        1000 → [7 条]   ┐
+        1001 → [7 条]   │
+        1002→ [7 条]   │
+        ...            ├── 8 行 × 每行 7 条 = 56
+        1007 → [7 条]   ┘
+        30 城时就是 30 × 29 = 870。
+     */
     public int adjacencyRecordCount() {
         int count = 0;
         for (List<Edge> edges : adjacency.values()) {
@@ -123,6 +147,7 @@ public class WeightedGraph {
         return count;
     }
 
+    //degree作用：计算某个城市的度
     public int degree(int cityId) {
         List<Edge> edges = adjacency.get(cityId);
         return edges == null ? 0 : edges.size();
@@ -318,6 +343,7 @@ public class WeightedGraph {
         return builder.toString();
     }
 
+    //requireVertex作用是通过cityId判断该城市是否在图中
     private void requireVertex(int cityId) {
         if (!adjacency.containsKey(cityId)) {
             throw new IllegalArgumentException("城市不存在：" + cityId);
