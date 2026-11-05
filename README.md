@@ -47,6 +47,7 @@ npm run dev
 
 - [开发文档 v1.1](docs/开发文档-v1.1.md)：需求、排期、核心设计、接口、测试。
 - [接口与分层约定](docs/接口与分层约定.md)：当前分工、Service 签名、DTO、异常和分支规则。
+- [公共层说明](docs/公共层说明.md)：`Result`、`FieldError`、异常处理、认证骨架怎么读。
 - [项目结构说明](docs/项目结构说明.md)：每个目录放什么、依赖方向、数据流。
 - [API 契约](docs/api.md)：接口清单、字段、示例。
 - [环境与 IDE](docs/环境与IDE.md)：VS Code 报错、Maven 依赖安装。

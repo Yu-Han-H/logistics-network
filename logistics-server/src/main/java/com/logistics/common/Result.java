@@ -5,6 +5,9 @@ import java.util.List;
 /**
  * 统一响应体。
  *
+ * <p>这是 record：{@code code()}、{@code message()}、{@code data()}、{@code errors()}
+ * 是编译器自动生成的访问器；{@code ok/fail} 是手写的静态工厂方法。
+ *
  * @param code    业务状态码，和 HTTP 状态码一致
  * @param message 提示信息
  * @param data    业务数据，失败时为 null
