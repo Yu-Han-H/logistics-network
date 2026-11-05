@@ -33,9 +33,9 @@ public class KruskalMST {
      * 城市 id 是全局唯一整数，所以这个顺序是全序，结果可复现。
      */
     private static final Comparator<Edge> EDGE_ORDER = Comparator
-        .comparingDouble(Edge::getWeight)
-        .thenComparingInt(Edge::getStartId)
-        .thenComparingInt(Edge::getEndId);
+        .comparingDouble((Edge edge) -> edge.getWeight())
+        .thenComparingInt(edge -> edge.getStartId())
+        .thenComparingInt(edge -> edge.getEndId());
 
     /**
      * 对给定无向图求最小生成树。
