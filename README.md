@@ -46,17 +46,20 @@ npm run dev
 ## 文档
 
 - [开发文档 v1.1](docs/开发文档-v1.1.md)：需求、排期、核心设计、接口、测试。
+- [接口与分层约定](docs/接口与分层约定.md)：当前分工、Service 签名、DTO、异常和分支规则。
+- [公共层说明](docs/公共层说明.md)：`Result`、`FieldError`、异常处理、认证骨架怎么读。
 - [项目结构说明](docs/项目结构说明.md)：每个目录放什么、依赖方向、数据流。
-- [API 契约](docs/api.md)：接口清单和示例。
+- [API 契约](docs/api.md)：接口清单、字段、示例。
 - [环境与 IDE](docs/环境与IDE.md)：VS Code 报错、Maven 依赖安装。
 - [开发文档 v1.0](docs/开发文档.md)：旧版，保留对比。
 
 ## 当前状态
 
-- 后端骨架已搭好：Maven Wrapper、启动类、包结构、`application.yml`。
+- 数据结构与算法已完成：链表、图、Prim、Kruskal、Dijkstra，33 个数据结构/算法测试 + 1 个 Spring 上下文测试，全部通过。
+- 30 城 `cities.txt` 已就绪。
+- 接口骨架已搭好：`common`、`dto`、`service`、`controller`、`auth`，方法与 `docs/api.md` 对齐。
 - 前端骨架已搭好：Vite、路由、登录页、5 个业务页占位、axios 封装。
-- `demo/` 已移到 `_archive/spring-initializr-demo/`，旧 VS Code Java 模板已移到 `_archive/logistics-server-vscode-template/`。
-- 已初始化 Git 仓库（`main` 分支），初始提交 `c452c15`。
+- 已初始化 Git 仓库（`main` 分支）；当前开发在 `feature/hyh`。
 - 已提供 `logistics-network.code-workspace`，用 VS Code 打开它，后端才会被识别为 Maven 工程。
 
 ## 版本说明
@@ -65,7 +68,8 @@ npm run dev
 
 ## 下一步
 
-1. 梁敬谦把 30 城 `cities.txt` 放进 `logistics-server/src/main/resources/data/`。
-2. 后端先写 `structure/` 和 `algorithm/`，再写 `service/`，最后写 `controller/`。
-3. 前端按 `docs/api.md` 的契约做 mock，不要等后端。
-4. 每天同步一次，接口变了先改文档。
+1. 梁敬谦：实现 `CityService`（加载 30 城、CRUD、动态更新）、`CityController`、`AdminController`。
+2. 郝晟尧：实现 `GraphService`、`MstService`、`PathService` 和三个 Controller。
+3. 黄予函：实现 `AuthService`/`AuthController`/`AuthInterceptor`，同时做前端 6 个页面。
+4. 前端按 `docs/api.md` 做 mock，不要等后端。
+5. 每完成一个 Service，用 `curl` 对一遍契约；11-12 代码冻结。
