@@ -347,7 +347,8 @@ Authorization: Bearer <token>
 | GET | `/api/paths/shortest?from={id}&to={id}&mode=graph\|tree` | 登录 | `mode` 默认 `graph` | `PathDTO` |
 | POST | `/api/admin/reset` | 管理员 | — | `null` |
 
-> 权限目前只是注解和约定；`AuthInterceptor` 还是放行骨架，黄予函补完后才真正 401/403。
+> 权限已由 `AuthInterceptor` 实现：未带 token 返回 401；普通用户调写接口返回 403；登录接口公开。
+> `reference` 传了不存在的 id 时，回退到 id 最小的城市（默认北京），响应里的 `reference` 是实际使用的城市。
 
 ## 7. 校验和边界
 
@@ -387,3 +388,4 @@ Authorization: Bearer <token>
 |---|---|---|
 | 2026-10-28 | 初版，按 v1.1 第 7 章整理 | 前端可据此做 mock |
 | 2026-11-04 | 补齐 DTO、认证、错误体、校验、graphVersion；后端骨架按本文件生成 | 前后端以此为唯一契约 |
+| 2026-11-06 | 后端接口联调通过；`AuthInterceptor` 已实现；补 `reference` 回退说明 | 前端可直接接真实接口 |

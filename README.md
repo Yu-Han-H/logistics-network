@@ -55,10 +55,10 @@ npm run dev
 
 ## 当前状态
 
-- 数据结构与算法已完成：链表、图、Prim、Kruskal、Dijkstra，33 个数据结构/算法测试 + 1 个 Spring 上下文测试，全部通过。
+- 数据结构与算法已完成：链表、图、Prim、Kruskal、Dijkstra，53 个测试全部通过（含性能对比、登录/权限、Spring 上下文）。
 - 30 城 `cities.txt` 已就绪。
-- 接口骨架已搭好：`common`、`dto`、`service`、`controller`、`auth`，方法与 `docs/api.md` 对齐。
-- 前端骨架已搭好：Vite、路由、登录页、5 个业务页占位、axios 封装。
+- 后端接口已实现并联调通过：登录、城市 CRUD、排序链表、邻接表、MST、最短路径、重置；401/403 已验证。
+- 前端骨架已搭好：Vite、路由、登录页、5 个业务页占位、axios 封装；页面逻辑还没写。
 - 已初始化 Git 仓库（`main` 分支）；当前开发在 `feature/hyh`。
 - 已提供 `logistics-network.code-workspace`，用 VS Code 打开它，后端才会被识别为 Maven 工程。
 
@@ -68,8 +68,7 @@ npm run dev
 
 ## 下一步
 
-1. 梁敬谦：实现 `CityService`（加载 30 城、CRUD、动态更新）、`CityController`、`AdminController`。
-2. 郝晟尧：实现 `GraphService`、`MstService`、`PathService` 和三个 Controller。
-3. 黄予函：实现 `AuthService`/`AuthController`/`AuthInterceptor`，同时做前端 6 个页面。
-4. 前端按 `docs/api.md` 做 mock，不要等后端。
-5. 每完成一个 Service，用 `curl` 对一遍契约；11-12 代码冻结。
+1. 黄予函：写前端 6 个页面，直接接真实接口（`docs/api.md` 已和后端对齐）。
+2. 后端收尾：提交 Auth 代码；把 `structure/Main.java`、`GraphCheck.java` 移到 `cli` 或 `test`。
+3. 联调：按 `docs/api.md` 对一遍 401/403、增删城市后 MST/路径更新。
+4. 预留 11-12 代码冻结；11-13~15 测试、报告、PPT、演练。
