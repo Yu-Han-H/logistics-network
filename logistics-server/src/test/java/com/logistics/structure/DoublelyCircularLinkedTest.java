@@ -2,7 +2,7 @@ package com.logistics.structure;
 
 import com.logistics.model.City;
 
-public class Main {
+public class DoublelyCircularLinkedTest {
     public static void main(String[] args) {
             DoublyCircularLinkedList list = new DoublyCircularLinkedList();
             list.addLast(new City(1000, "北京", 116.41, 39.90));
