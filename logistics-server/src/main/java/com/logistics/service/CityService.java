@@ -71,7 +71,7 @@ public class CityService {
     /** 所有城市，按 id 升序。 */
     public List<CityDTO> list() {
         List<City> sorted = new ArrayList<>(cities.toList());
-        sorted.sort(Comparator.comparingInt(City::getId));
+        sorted.sort(Comparator.comparingInt((City city)->city.getId()));
         List<CityDTO> result = new ArrayList<>(sorted.size());
         for (City city : sorted) {
             result.add(CityDTO.from(city));

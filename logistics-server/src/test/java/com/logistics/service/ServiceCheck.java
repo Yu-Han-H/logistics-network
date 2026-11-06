@@ -9,15 +9,10 @@ import com.logistics.dto.PathDTO;
 import com.logistics.dto.PathNodeDTO;
 import com.logistics.exception.CityNotFoundException;
 import com.logistics.model.Edge;
-import com.logistics.service.CityService;
-import com.logistics.service.GraphService;
-import com.logistics.service.MstService;
-import com.logistics.service.PathService;
 import com.logistics.structure.WeightedGraph;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -226,7 +221,7 @@ public class ServiceCheck {
 
     private static String pathNames(PathDTO dto) {
         return dto.path().stream()
-            .map(PathNodeDTO::name)
+            .map((PathNodeDTO node) -> node.name())
             .collect(Collectors.joining(" → ", "[", "]"));
     }
 }
