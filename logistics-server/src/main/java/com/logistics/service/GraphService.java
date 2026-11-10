@@ -43,11 +43,16 @@ public class GraphService {
      */
     public GraphDTO graph() {
         WeightedGraph graph = currentGraph();
-        Map<Integer, String> names = cityNames();
+        Map<Integer, CityDTO> cityMap = cityById();
 
         List<GraphNodeDTO> nodes = new ArrayList<>(graph.vertexCount());
         for (int cityId : graph.vertices()) {
-            nodes.add(new GraphNodeDTO(String.valueOf(cityId), names.getOrDefault(cityId, "")));
+            CityDTO city = cityMap.get(cityId);
+            nodes.add(new GraphNodeDTO(
+                String.valueOf(cityId),
+                city == null ? "" : city.name(),
+                city == null ? 0.0 : city.longitude(),
+                city == null ? 0.0 : city.latitude()));
         }
 
         // 边按 (startId, endId) 排序，保证每次输出顺序一致
@@ -151,5 +156,15 @@ public class GraphService {
             names.put(city.id(), city.name());
         }
         return names;
+    }
+
+    /** 一次性取出 id → 城市完整对象，给 G6 节点补经纬度。 */
+    private Map<Integer, CityDTO> cityById() {
+        List<CityDTO> cities = cityService.list();
+        Map<Integer, CityDTO> byId = new HashMap<>(cities.size() * 2);
+        for (CityDTO city : cities) {
+            byId.put(city.id(), city);
+        }
+        return byId;
     }
 }
