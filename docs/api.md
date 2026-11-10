@@ -218,7 +218,9 @@ Authorization: Bearer <token>
 
 ```json
 {
-  "nodes": [ { "id": "1000", "name": "北京" } ],
+  "nodes": [
+    { "id": "1000", "name": "北京", "longitude": 116.41, "latitude": 39.90 }
+  ],
   "edges": [ { "source": "1000", "target": "1001", "weight": 1068.39 } ],
   "nodeCount": 30,
   "edgeCount": 435

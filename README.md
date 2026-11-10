@@ -22,6 +22,21 @@ logistics-network/
 
 ## 快速开始
 
+一键启动前后端：
+
+```powershell
+cd logistics-network
+.\scripts\start.cmd
+```
+
+停止：
+
+```powershell
+.\scripts\stop.cmd
+```
+
+也可以手动分开启动：
+
 ### 后端
 
 ```powershell
@@ -52,13 +67,16 @@ npm run dev
 - [API 契约](docs/api.md)：接口清单、字段、示例。
 - [环境与 IDE](docs/环境与IDE.md)：VS Code 报错、Maven 依赖安装。
 - [开发文档 v1.0](docs/开发文档.md)：旧版，保留对比。
+- [开发文档审阅意见](docs/开发文档审阅意见.md)：v1.1 的修改依据。
+- [作业要求核对](docs/report/作业要求核对.md)：按课程 PDF 逐项核对完成情况。
+- [成员代码量统计](docs/report/成员代码量统计.md)：按 Git 提交统计三人功能/测试代码量。
 
 ## 当前状态
 
-- 数据结构与算法已完成：链表、图、Prim、Kruskal、Dijkstra，53 个测试全部通过（含性能对比、登录/权限、Spring 上下文）。
+- 数据结构与算法已完成：链表、图、Prim、Kruskal、Dijkstra，53 个 JUnit 测试全部通过；另有 ServiceCheck 41 项、GraphCheck 29 项控制台自检。
 - 30 城 `cities.txt` 已就绪。
 - 后端接口已实现并联调通过：登录、城市 CRUD、排序链表、邻接表、MST、最短路径、重置；401/403 已验证。
-- 前端骨架已搭好：Vite、路由、登录页、5 个业务页占位、axios 封装；页面逻辑还没写。
+- 前端页面已完成：登录、城市管理、链表视图、邻接表、MST、最短路径、404；接真实接口，G6 图按经纬度投影。
 - 已初始化 Git 仓库（`main` 分支）；当前开发在 `feature/hyh`。
 - 已提供 `logistics-network.code-workspace`，用 VS Code 打开它，后端才会被识别为 Maven 工程。
 
@@ -68,7 +86,6 @@ npm run dev
 
 ## 下一步
 
-1. 黄予函：写前端 6 个页面，直接接真实接口（`docs/api.md` 已和后端对齐）。
-2. 后端收尾：提交 Auth 代码；把 `structure/Main.java`、`GraphCheck.java` 移到 `cli` 或 `test`。
-3. 联调：按 `docs/api.md` 对一遍 401/403、增删城市后 MST/路径更新。
-4. 预留 11-12 代码冻结；11-13~15 测试、报告、PPT、演练。
+1. 联调：按 `docs/api.md` 对一遍 401/403、增删城市后 MST/路径更新。
+2. 补 `cli/ConsoleRunner.java` 控制台四类输出，作为答辩兜底。
+3. 预留 11-12 代码冻结；11-13~15 测试、报告、PPT、演练。
