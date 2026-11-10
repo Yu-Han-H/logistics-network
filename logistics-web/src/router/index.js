@@ -61,7 +61,9 @@ const router = createRouter({
 router.beforeEach((to) => {
   document.title = to.meta.title ? `${to.meta.title} - 物流网络系统` : '物流网络系统'
   if (to.meta.public) return true
-  if (!getToken()) return { name: 'login' }
+  if (!getToken()) {
+    return { name: 'login', query: { redirect: to.fullPath } }
+  }
   return true
 })
 

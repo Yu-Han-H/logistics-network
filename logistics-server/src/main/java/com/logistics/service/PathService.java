@@ -9,14 +9,10 @@ import com.logistics.dto.PathNodeDTO;
 import com.logistics.exception.CityNotFoundException;
 import com.logistics.model.Edge;
 import com.logistics.structure.WeightedGraph;
-import com.logistics.util.DistanceUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -112,69 +108,23 @@ public class PathService {
     }
 
     /**
-     * 在 MST 上找 from → to 的唯一路径：建树 → BFS 记前驱 → 回溯算代价。
+     * 在 MST 上跑 Dijkstra：先用 MST 的边建一棵树图，再调用同一个 Dijkstra。
      *
-     * <p>MST 是树，两点之间路径唯一；图不连通时返回 found=false。
+     * <p>MST 是树，两点之间路径唯一；这样既满足“基于生成树拓扑结构”，
+     * 又保证 tree 模式确实走的是 Dijkstra 算法。图不连通时返回 found=false。
      */
     private DijkstraShortestPath.PathResult treePath(WeightedGraph graph, int fromId, int toId) {
-        long startNanos = System.nanoTime();
-
-        if (fromId == toId) {
-            return new DijkstraShortestPath.PathResult(
-                true, 0.0, 0, List.of(fromId), System.nanoTime() - startNanos);
-        }
-
         MstResult mst = new PrimMST().primMST(graph);
 
-        Map<Integer, List<Edge>> tree = new HashMap<>();
+        WeightedGraph tree = new WeightedGraph();
+        for (int cityId : graph.vertexIds()) {
+            tree.addVertex(cityId);
+        }
         for (Edge edge : mst.getEdges()) {
-            tree.computeIfAbsent(edge.getStartId(), key -> new ArrayList<>()).add(edge);
-            tree.computeIfAbsent(edge.getEndId(), key -> new ArrayList<>()).add(edge);
+            tree.addEdge(edge.getStartId(), edge.getEndId(), edge.getWeight());
         }
 
-        Map<Integer, Integer> parent = new HashMap<>();
-        Map<Integer, Double> weightFromParent = new HashMap<>();
-        Deque<Integer> queue = new ArrayDeque<>();
-
-        parent.put(fromId, -1);
-        queue.add(fromId);
-        boolean reached = false;
-
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-            if (current == toId) {
-                reached = true;
-                break;
-            }
-            for (Edge edge : tree.getOrDefault(current, List.of())) {
-                int next = edge.other(current);
-                if (parent.containsKey(next)) {
-                    continue;
-                }
-                parent.put(next, current);
-                weightFromParent.put(next, edge.getWeight());
-                queue.add(next);
-            }
-        }
-
-        if (!reached) {
-            return new DijkstraShortestPath.PathResult(
-                false, null, 0, List.of(), System.nanoTime() - startNanos);
-        }
-
-        LinkedList<Integer> path = new LinkedList<>();
-        double cost = 0.0;
-        for (int cursor = toId; cursor != -1; cursor = parent.get(cursor)) {
-            path.addFirst(cursor);
-            Double weight = weightFromParent.get(cursor);
-            if (weight != null) {
-                cost += weight;
-            }
-        }
-
-        return new DijkstraShortestPath.PathResult(
-            true, DistanceUtil.round2(cost), path.size() - 1, path,
-            System.nanoTime() - startNanos);
+        return new DijkstraShortestPath().shortestPath(tree, fromId, toId);
     }
 
     private Map<Integer, String> cityNames() {
